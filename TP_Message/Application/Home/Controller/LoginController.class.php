@@ -32,6 +32,10 @@ class LoginController extends Controller{
 	public function registerClick(){
 		$this->redirect('Register/index');
 	}
+
+	public function vcode(){
+		
+	}
 }
 
 
