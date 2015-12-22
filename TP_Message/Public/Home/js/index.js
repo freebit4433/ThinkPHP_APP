@@ -15,7 +15,7 @@ function submit(){
 	data.comment = $("#commentContent").val();
 	$.post(url,data,function(rxData){
 		if (rxData.flag) {
-			alert("提交成功!");
+			//alert("提交成功!");
 			refresh();
 		};
 		

@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Org\Util\AjaxPage;
 class IndexController extends Controller {
     public function _initialize(){
         if (session('?isLogin')) {
