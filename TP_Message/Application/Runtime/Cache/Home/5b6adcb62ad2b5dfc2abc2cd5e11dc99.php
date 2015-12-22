@@ -25,7 +25,6 @@
 				<img id="vcodeimg" src="<?php echo U('Login/vcode');?>">
 			</div>
 			<div id="loginButton">
-				<!-- <a id="login" style="cursor:pointer">登&nbsp;&nbsp;&nbsp;&nbsp;录</a> -->
 				<input id="login" type="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;录">
 			</div>
 			<a id="register" href="<?php echo U('Login/registerClick');?>">立即注册</a>

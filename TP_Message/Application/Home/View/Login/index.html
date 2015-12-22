@@ -31,7 +31,14 @@
 			</form>
 		</div>
 	</div>
-
+	<script type="text/javascript">
+		$("#vcodeimg").bind('click',function(){
+			var date = new Date();
+			var url = $("#vcodeurl").text();
+			url = url + "?action=" + date.getTime();
+			$("#vcodeimg").attr('src',url);
+		});
+	</script>
 
 
 </body>
