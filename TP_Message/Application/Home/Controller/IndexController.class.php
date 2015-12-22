@@ -53,7 +53,7 @@ class IndexController extends Controller {
         $page = new AjaxPage($count,10,'refresh');
         $pageData = $page->show();
 
-        $commentData = $commentTable->limit($page->firstRow,$page->listRows)->select();
+        $commentData = $commentTable->limit($page->firstRow,$page->listRows)->order('commenttime desc')->select();
         foreach ($commentData as $rowNum => $rowData) {
             date_default_timezone_set('PRC');
             $commentData[$rowNum]['commenttime'] = date("Y年m月d日 H:i:s",$commentData[$rowNum]['commenttime']);

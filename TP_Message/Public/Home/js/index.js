@@ -22,7 +22,7 @@ function submit(){
 	},'json');
 }
 
-function refresh(jumpPage){
+function refresh(jumpPage=null){
 	var url = $("#refreshURL").text();
 	var deleteUrl = $("#deleteURL").text();
 	var username = $("#username").text();
@@ -60,7 +60,7 @@ function refresh(jumpPage){
 				}else{
 					htmlCont = htmlCont.replace(/indexWrapper/,"");
 				}
-				$("#content").prepend(htmlCont);
+				$("#content").append(htmlCont);
 
 				if (data[row]["username"] == username) {
 					$("#"+indexWrapper).bind('mouseenter',{indexWrapper:indexWrapper},function(event) {
