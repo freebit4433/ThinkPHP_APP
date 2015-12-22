@@ -48,22 +48,23 @@ class IndexController extends Controller {
     }
 
     public function refresh(){
-        if (!IS_POST) {
-            $this->error('拒绝访问！','../Login/index',1);
-        }else{
-            $commentData = M('table2comment')->select();
-            foreach ($commentData as $rowNum => $rowData) {
-                date_default_timezone_set('PRC');
-                $commentData[$rowNum]['commenttime'] = date("Y年m月d日 H:i:s",$commentData[$rowNum]['commenttime']);
+        $commentTable = M('table2comment');
+        $count = $commentTable->count();
+        $page = new AjaxPage($count,10,'refresh');
+        $pageData = $page->show();
 
-                $condition['username'] = $commentData[$rowNum]['username'];
-                $userData = M('table2user')->field('imgnum,webpage')->where($condition)->select();
-                $commentData[$rowNum]['imgnum'] = $userData[0]['imgnum'];
-                $commentData[$rowNum]['webpage'] = $userData[0]['webpage'];
-            }
-            
-            $this->ajaxReturn($commentData,'json');
+        $commentData = $commentTable->limit($page->firstRow,$page->listRows)->select();
+        foreach ($commentData as $rowNum => $rowData) {
+            date_default_timezone_set('PRC');
+            $commentData[$rowNum]['commenttime'] = date("Y年m月d日 H:i:s",$commentData[$rowNum]['commenttime']);
+
+            $condition['username'] = $commentData[$rowNum]['username'];
+            $userData = M('table2user')->field('imgnum,webpage')->where($condition)->select();
+            $commentData[$rowNum]['imgnum'] = $userData[0]['imgnum'];
+            $commentData[$rowNum]['webpage'] = $userData[0]['webpage'];
         }
+        $commentData['pagedata'] = $pageData;
+        $this->ajaxReturn($commentData,'json');
     }
 
     public function delete(){
