@@ -53,15 +53,15 @@ class IndexController extends Controller {
         $page = new AjaxPage($count,10,'refresh');
         $pageData = $page->show();
 
-        $commentData = $commentTable->limit($page->firstRow,$page->listRows)->order('commenttime desc')->select();
+        $commentData = $commentTable->alias('c')->field('c.id,c.username,c.commenttime,c.comment,table2user.imgnum,table2user.webpage')->limit($page->firstRow,$page->listRows)->join('table2user ON c.username = table2user.username')->order('c.commenttime desc')->select();
         foreach ($commentData as $rowNum => $rowData) {
             date_default_timezone_set('PRC');
             $commentData[$rowNum]['commenttime'] = date("Y年m月d日 H:i:s",$commentData[$rowNum]['commenttime']);
 
-            $condition['username'] = $commentData[$rowNum]['username'];
+            /*$condition['username'] = $commentData[$rowNum]['username'];
             $userData = M('table2user')->field('imgnum,webpage')->where($condition)->select();
             $commentData[$rowNum]['imgnum'] = $userData[0]['imgnum'];
-            $commentData[$rowNum]['webpage'] = $userData[0]['webpage'];
+            $commentData[$rowNum]['webpage'] = $userData[0]['webpage'];*/
         }
         $commentData['pagedata'] = $pageData;
         $this->ajaxReturn($commentData,'json');
