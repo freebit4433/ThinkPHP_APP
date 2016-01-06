@@ -39,11 +39,19 @@ class IndexController extends Controller {
             if ($res) {
                 $txData['flag'] = true;
                 $txData['id'] = $res;
-                
             }else{
                 $txData['flag'] = false;
             }
-            $this->ajaxReturn($txData,'json');
+            //当数据添加多于60条，删除40条
+            if($commentTable->count() > 60){
+                $idCount = $commentTable->field('id')->limit(40)->select();
+                if($idCount){
+                    $idMax = $idCount[39]['id'];
+                    $condition['id'] = array('lt',$idMax);
+                    $commentTable->where($condition)->delete();
+                }
+            }
+            $this->ajaxReturn($txData,'json'); 
         }
     }
 

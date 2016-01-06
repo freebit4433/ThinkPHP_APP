@@ -15,6 +15,17 @@ class RegisterModel extends Model{
 		array('password','md5',1,'function'),
 		array('registertime','time',1,'function'),
 	);
+
+	public function deleteTooMuchData(){
+		if($this->count() > 40){
+			$idCount = $this->field('id')->limit(20)->select();
+			if($idCount){
+				$idMax = $idCount[19]['id'];
+				$condition['id'] = array('lt',$idMax);
+				$this->where($condition)->delete();
+			}
+		}
+	}
 }
 
 ?>
